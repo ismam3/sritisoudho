@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+        <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+        <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>  
+ 
+        <!-- <script src="aframe-extras.min.js"></script> -->
+        <!-- <script src="aframe-physics-system.min.js"></script> -->
+
+        <title>জাতীয় স্মৃতিসৌধ</title>
+        
+    </head>
+    <body style="user-select: none; -webkit-app-region:drag;">
+
+        <a-scene loading-screen="dotsColor: red; backgroundColor: green" physics="debug: false" vr-mode-ui="enabled:false">
+            <!-- <div id="preloader"></div> -->
+            <!-- assets -->
+            <a-assets>
+                <img id="concrete_texture" src="textures/concrete_texture.jpg">
+                <img id="white_marbel" src="textures/white_marbel_tiles.jpg">
+                <img id="sky_texture" src="textures/clear_sky.jpeg">
+                <img id="grass_texture" src="textures/grass(1).jpg">
+                <img id="brick" src="textures/brick_texture.jpg">
+                <a-asset-item id="sritisoudho" src="models/sritisoudho30.glb"></a-asset-item>
+                <a-asset-item id="mesh" src="models/mesh4.glb"></a-asset-item>
+            </a-assets>
+
+            <a-entity environment="preset: forest;fog:0.4;dressing:none;ground:flat;shadow:true;lighting:none" scale="3 1 3"></a-entity>
+
+            <a-entity id="smritisoudho" rotation="0 135 0" position="8 2 -70" gltf-model="#sritisoudho" scale="0.5 0.5 0.5">
+            </a-entity>
+            <a-entity mesh id="mesh" rotation="0 135 0" position="8 2.2 -70" gltf-model="#mesh" scale="0.5 0.5 0.5">
+            </a-entity>
+
+
+            <a-entity id="cameraRig" position="0 2.6 0" >
+                <a-entity id="head" position="0 0 0" camera="userHeight:2.6" look-controls="pointerLockEnabled:true">
+                    <a-entity position="0.1 -0.1 0"
+                        touch-listener
+                        teleport-controls=
+                            "cameraRig: #cameraRig;
+                            teleportOrigin: #head;
+                            startEvents:starttouch;
+                            endEvents:endtouch;
+                            curveShootingSpeed:7;
+                            hitCylinderRadius:1;
+                            collisionEntities: [mesh]"
+                    >
+                    </a-entity>
+                </a-entity>
+            </a-entity>    
+            <a-entity light="type: ambient; color: #CCC"></a-entity>
+        </a-scene>
+        <script>
+            AFRAME.registerComponent('touch-listener', {
+                init: function () {
+                    var targetEl = this.el;
+
+                    //Create the touchstart event
+                    document.querySelector('a-scene').addEventListener('touchstart', function () {
+                    targetEl.emit('starttouch')
+                    })
+
+                    document.querySelector('a-scene').addEventListener('mousedown', function () {
+                    targetEl.emit('starttouch')
+                    })
+
+                    document.body.addEventListener('keydown', function (e) {
+                    if (e.keyCode == 32) {
+                        console.log('space key pressed!');
+                        targetEl.emit('starttouch');      
+                    }  
+                    })
+                    
+                    //Create the touchend event
+                    document.querySelector('a-scene').addEventListener('touchend', function () {
+                    targetEl.emit('endtouch')
+                    })
+                    
+                    document.querySelector('a-scene').addEventListener('mouseup', function () {
+                    targetEl.emit('endtouch')
+                    })
+                    
+                    document.body.addEventListener('keyup', function (e) {
+                    if (e.keyCode == 32) {
+                        console.log('space key released!');
+                        targetEl.emit('endtouch');      
+                    }  
+                    })
+
+                    
+                }
+                });
+
+        </script>
+    </body>
+</html>
