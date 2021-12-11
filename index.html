@@ -8,9 +8,16 @@
         <!-- <script src="aframe-physics-system.min.js"></script> -->
 
         <title>জাতীয় স্মৃতিসৌধ</title>
-        
+        <script>
+            function tn_pl(){
+                setInterval(()=>{
+                    document.getElementById("player").volume = 0.5;
+                    document.getElementById("player").play();
+                },5000)
+            }
+        </script>
     </head>
-    <body style="user-select: none; -webkit-app-region:drag;">
+    <body onload="tn_pl()" style="user-select: none; -webkit-app-region:drag;">
 
         <a-scene loading-screen="dotsColor: red; backgroundColor: green" physics="debug: false" vr-mode-ui="enabled:false">
             <!-- <div id="preloader"></div> -->
@@ -32,6 +39,8 @@
             <a-entity mesh id="mesh" rotation="0 135 0" position="8 2.2 -70" gltf-model="#mesh" scale="0.5 0.5 0.5">
             </a-entity>
 
+            <a-entity id="music"></a-entity>
+
 
             <a-entity id="cameraRig" position="0 2.6 0" >
                 <a-entity id="head" position="0 0 0" camera="userHeight:2.6" look-controls="pointerLockEnabled:true">
@@ -51,6 +60,10 @@
             </a-entity>    
             <a-entity light="type: ambient; color: #CCC"></a-entity>
         </a-scene>
+        <audio  id="player" autoplay loop>
+            <source src="tunes/ek-sagor-rokter.mp3" type="audio/mp3">
+        </audio>
+        </iframe> 
         <script>
             AFRAME.registerComponent('touch-listener', {
                 init: function () {
