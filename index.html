@@ -20,7 +20,7 @@
     </head>
     <body onload="tn_pl()" style="user-select: none; -webkit-app-region:drag;">
 
-        <a-scene loading-screen="dotsColor: red; backgroundColor: green" physics="debug: false" vr-mode-ui="enabled:false">
+        <a-scene loading-screen="dotsColor: red; backgroundColor: green" physics="debug: false" vr-mode-ui="enabled:true">
             <!-- <div id="preloader"></div> -->
             <!-- assets -->
             <a-assets>
@@ -57,6 +57,7 @@
                             collisionEntities: [mesh]"
                     >
                     </a-entity>
+                    <a-cursor></a-cursor>
                 </a-entity>
             </a-entity>    
             <a-entity light="type: ambient; color: #CCC"></a-entity>
